@@ -5,5 +5,5 @@
 
 require "sinatra"
 get "/hello" do
-	"Hello, Sinatra"
+  "Hello, Sinatra"
 end

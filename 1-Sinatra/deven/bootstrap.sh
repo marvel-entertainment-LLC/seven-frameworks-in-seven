@@ -4,6 +4,6 @@
 
 apt-get update
 
-gem install sinatra
+gem install sinatra rspec rack-test
 
 echo "Provisioning Complete!"
