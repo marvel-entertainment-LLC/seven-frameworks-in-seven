@@ -4,6 +4,13 @@
 
 apt-get update
 
-gem install sinatra rspec rack-test
+apt-get install -y ruby-dev
+apt-get install -y libsqlite3-dev
+
+gem install sinatra
+gem install rspec rack-test
+gem install sqlite3 data_mapper dm-sqlite-adapter
+gem install dm-serializer
+
 
 echo "Provisioning Complete!"
