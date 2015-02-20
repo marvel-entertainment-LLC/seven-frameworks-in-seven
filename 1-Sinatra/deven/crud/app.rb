@@ -7,13 +7,26 @@ DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/bookmarks.db")
 DataMapper.finalize.auto_upgrade!
 
 
-def get_all_bookmarks
-  Bookmark.all(:order => :title)
+def get_all_bookmarks(options)
+  order_by = options.fetch("order_by", "title")
+  order_dir = options.fetch("order_dir", "asc")
+
+  # I dunno why, but it works...
+  # http://stackoverflow.com/a/5383727
+  sort = DataMapper::Query::Operator.new(order_by, order_dir)
+  Bookmark.all(:order => [sort])
 end
 
 get "/bookmarks" do
+  options = {}
+  if params[:orderby]
+    order_by = params[:orderby].partition(" ")
+    options["order_by"] = order_by.first
+    options["order_dir"] = (order_by.last if ["asc", "desc"].include?(order_by.last)) || ("asc")
+  end
+
   content_type :json
-  get_all_bookmarks.to_json
+  get_all_bookmarks(options).to_json
 end
 
 post "/bookmarks" do
