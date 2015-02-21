@@ -14,6 +14,10 @@ helpers do
   end
 end
 
+before do
+  @sinatra = self
+end
+
 def get_all_bookmarks
   Bookmark.all(:order => :title)
 end
@@ -26,38 +30,38 @@ end
 
 get "/bookmark/new" do
   content_type :html
-  @sinatra = self
   nokogiri :bookmark_new
+end
+post "/bookmarks/new" do
+  input = params.slice "url", "title"
+  Bookmark.create input
+  redirect to("/")
 end
 
 get "/bookmarks/:id" do
-  @sinatra = self
   id = params[:id]
   @bookmark = Bookmark.get(id)
   content_type :html
   nokogiri :bookmark_edit
 end
 
-post "/bookmarks/:id" do
-  input = params.slice "url", "title"
-  bookmark = Bookmark.create input
-  # Created
-  [201, "/bookmarks/#{bookmark['id']}"]
-end
-
 put "/bookmarks/:id" do
-  @sinatra = self
   id = params[:id]
-  @bookmark = Bookmark.get(id)
+  bookmark = Bookmark.get(id)
   input = params.slice "url", "title"
   bookmark.update input
-  to '/'
+  redirect to('/')
 end
 
 delete "/bookmarks/:id" do
-  @sinatra = self
   id = params[:id]
   bookmark = Bookmark.get(id)
   bookmark.destroy
-  to '/'
+  redirect to('/')
+end
+
+class Hash
+  def slice(*whitelist)
+    whitelist.inject({}) {|result, key| result.merge(key => self[key])}
+  end
 end

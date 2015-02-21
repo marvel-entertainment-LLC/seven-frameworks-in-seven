@@ -1,7 +1,7 @@
 xml.html {
   xml.body {
     xml.form(:action=>"/bookmarks/#{@bookmark.id}",:method=>"post") {
-      xml.input :type => 'hidden', :name => 'method', :value => 'put'
+      xml.input :type => 'hidden', :name => '_method', :value => 'put'
       xml << @sinatra.nokogiri(:bookmark_inputs)
     }
   }
