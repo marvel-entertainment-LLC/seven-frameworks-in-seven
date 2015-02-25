@@ -1,20 +1,16 @@
-#---
-# Excerpted from "Seven Web Frameworks in Seven Weeks",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material, 
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose. 
-# Visit http://www.pragmaticprogrammer.com/titles/7web for more book information.
-#---
 require "sinatra"
+require "sinatra/respond_with"
 require "data_mapper"
 require_relative "bookmark"
 require_relative "tagging"
 require_relative "tag"
 require "dm-serializer"
+require "haml"
 
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/bookmarks.db")
-DataMapper.finalize.auto_migrate!
+DataMapper.finalize.auto_upgrade!
+
+layout :layout
 
 before %r{/bookmarks/(\d+)} do |id|
   @bookmark = Bookmark.get(id)
@@ -27,9 +23,10 @@ end
 with_tagList = {:methods => [:tagList]}
 
 get %r{/bookmarks/\d+} do
-  content_type :json
+  #content_type :json
 
-  @bookmark.to_json with_tagList
+  #@bookmark.to_json with_tagList
+  respond_with :bookmark_edit
 end
 
 put %r{/bookmarks/\d+} do
@@ -56,7 +53,8 @@ get "/bookmarks/*" do
   tags.each do |tag|
     bookmarks = bookmarks.all({:taggings => {:tag => {:label => tag}}})
   end
-  bookmarks.to_json with_tagList
+  respond_with :bookmark_list
+  #bookmarks.to_json with_tagList
 end
 
 def get_all_bookmarks
@@ -64,8 +62,12 @@ def get_all_bookmarks
 end
 
 get "/bookmarks" do
-  content_type :json
-  get_all_bookmarks.to_json with_tagList
+  #content_type :json
+  #get_all_bookmarks.to_json with_tagList
+  @bookmarks = get_all_bookmarks
+  new_bookmark = !params['new'].nil?
+  respond_with :bookmark_new  if new_bookmark
+  respond_with :bookmark_list unless new_bookmark
 end
 
 post "/bookmarks" do
