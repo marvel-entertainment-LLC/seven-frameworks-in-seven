@@ -6,4 +6,5 @@ class Bookmark
   property :id, Serial
   property :url, String
   property :title, String
+  property :created_at, DateTime 
 end
