@@ -1,0 +1,14 @@
+%a{ :href => "/bookmark/new" } Add New Bookmark
+%h2 List of Bookmarks (HAML)
+%ul
+  - @bookmarks.each do |bookmark|
+    %li
+      %a{ :href => "/bookmarks/#{bookmark.id}" } Edit
+      %form{ :action => "/bookmarks/#{bookmark.id}", :method => "post" }
+        %input{ :type => "hidden", :name => "_method", :value => "delete"}
+        %input{ :type => "submit", :value => "Delete" }
+      |
+      %a{ :href => "#{bookmark.url}" }&= bookmark.title 
+      (
+      %a{ :href => "#{bookmark.url}" }= bookmark.url 
+      )
