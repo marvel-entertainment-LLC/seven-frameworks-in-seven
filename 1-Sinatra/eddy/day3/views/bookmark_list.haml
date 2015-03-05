@@ -1,0 +1,14 @@
+
+%a(href='/bookmarks?new=1') Add new bookmark
+%h2 List of Bookmarks
+
+%ul
+  - @bookmarks.each do |b|
+    %li
+      %a(href="/bookmarks/#{b.id}")= b.title
+      %form(action="/bookmarks/#{b.id}" method="post")
+        %input(type="hidden" name="_method" value="delete")
+        %input(type="submit" value="delete")
+      |
+      %a(href="#{b.url}")= b.title
+      %a(href="#{b.url}")= b.url
