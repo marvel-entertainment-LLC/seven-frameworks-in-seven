@@ -9,6 +9,18 @@ DataMapper.finalize.auto_upgrade!
 require "dm-serializer"
 require "sinatra/respond_with"
 
+before "/bookmarks/:id" do |id|
+
+	@bookmark= Bookmark.get( id )
+	
+	if !@bookmark
+
+		halt 404, "bookmark #{id} not found"
+
+	end
+
+end
+
 get "/" do
 
 	@bookmarks = get_all_bookmarks
@@ -34,9 +46,6 @@ get "/bookmarks/:id" do
 
 	id = params[ :id ]
 	bookmark =  Bookmark.get( id )
-	if bookmark.nil?
-		halt 404
-	end
 	content_type :json
 	bookmark.to_json
 
@@ -64,24 +73,22 @@ put "/bookmarks/:id" do
 	id = params[ :id ]
 	bookmark = Bookmark.get( id )
 
-	if bookmark 
-
-		input = params.slice "url", "title"
-		if bookmark.update input
-		
-			204 #no content
-
-		else
-
-			400 #bad request
-
-		end 
+	input = params.slice "url", "title"
+	if bookmark.update input
+	
+		204 #no content
 
 	else
 
-		[ 404, "bookmark #{ id } not found" ]
+		400 #bad request
 
-	end
+	end 
+
+end
+
+get "/test/:one/:two" do |creature, sound|
+
+	"a #{ creature } says #{ sound }"
 
 end
 

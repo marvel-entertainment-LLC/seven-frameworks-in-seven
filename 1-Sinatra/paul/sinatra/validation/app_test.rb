@@ -41,6 +41,13 @@ describe "crud application" do |variable|
 
 	end
 
+	it "binds block parameters by order, not by name" do
+
+		get "/test/duck/quack"
+		expect( last_response.body ).to eq( "a duck says quack" )
+
+	end 
+
 	# it "creates a new bookmark" do
 
 	# 	get "/bookmarks"
