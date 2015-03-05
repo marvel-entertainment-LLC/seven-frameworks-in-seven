@@ -32,7 +32,7 @@ describe "Bookmarking App" do
 
     url = "http://www.test.com"
     title = "Test"
-    tags = ["cyan","purple","brown"]
+    tags = ["test","one","two"]
     post "/bookmarks",
       {:url => url, :title => title, :tagsAsString => tags.join(",")}
     last_response.status.should == 201
@@ -44,7 +44,8 @@ describe "Bookmarking App" do
     retrieved_bookmark = JSON.parse(last_response.body)
     expect(retrieved_bookmark["title"]).to eq(title)
     expect(retrieved_bookmark["url"]).to eq(url)
-    expect(retrieved_bookmark["tagList"]).to match_array(tags)
+    expect(retrieved_bookmark["tagList"] - tags).to eq([])
+    # expect(retrieved_bookmark["tagList"]).to match_array(tags)
     
     get "/bookmarks", nil, {'HTTP_ACCEPT' => "application/json"}
     bookmarks = JSON.parse(last_response.body)
@@ -54,17 +55,18 @@ describe "Bookmarking App" do
   it "updates a bookmark and tags" do
     url = "http://www.test.com"
     post "/bookmarks",
-      {:url => url, :title => "Test", :tagsAsString => "cyan,purple,brown"}
+      {:url => url, :title => "Test", :tagsAsString => "test,one,two"}
     bookmark_uri = last_response.body
     id = bookmark_uri.split("/").last
     
-    put "/bookmarks/#{id}", {:url => url, :title => "Success", :tagsAsString => "red,black"}
+    put "/bookmarks/#{id}", {:url => url, :title => "Success", :tagsAsString => "good,test"}
     last_response.status.should == 204
 
     get "/bookmarks/#{id}", nil, {'HTTP_ACCEPT' => "application/json"}
     retrieved_bookmark = JSON.parse(last_response.body)
     expect(retrieved_bookmark["title"]).to eq("Success")
-    expect(retrieved_bookmark["tagList"]).to match_array(["red","black"])
+    expect(retrieved_bookmark["tagList"] - ["good","test"]).to eq([])
+    # expect(retrieved_bookmark["tagList"]).to match_array(["good","test"])
   end
 
   it "deletes a bookmark" do
@@ -74,7 +76,7 @@ describe "Bookmarking App" do
     bookmarks = JSON.parse(last_response.body)
     last_size = bookmarks.size
     
-    delete "/bookmarks/#{bookmarks.last['id']}"
+    delete "/bookmarks/#{bookmarks.last['id']}", nil, {'HTTP_ACCEPT' => "application/json"}
     last_response.status.should == 200
 
     get "/bookmarks", nil, {'HTTP_ACCEPT' => "application/json"}
@@ -93,7 +95,7 @@ describe "Bookmarking App" do
   end
 
   it "sends an error code for an invalid delete request" do
-    delete "/bookmarks/0"
+    delete "/bookmarks/0", nil, {'HTTP_ACCEPT' => "application/json"}
     last_response.status.should == 404
   end
 
