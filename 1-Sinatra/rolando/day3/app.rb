@@ -52,7 +52,10 @@ end
 delete %r{/bookmarks/\d+} do
   # ...
   if @bookmark.destroy
-    200 # OK
+    respond_to do |f|
+      f.html { redirect "/" }
+      f.json { 200 } # OK
+    end
   else
     500 # Internal Server Error
   end
