@@ -1,0 +1,14 @@
+<label>
+  URL:
+  <input type="text" name="url" value="<%= @bookmark && @bookmark.url %>">
+</label>
+<label>
+  Title:
+  <input type="text" name="title" value="<%= @bookmark && @bookmark.title %>">
+</label>
+<label>
+  Tags:
+  <input type="text" name="tagsAsString" value="<%= @bookmark && @bookmark.tagList.join(',') %>">
+</label>
+<input type="submit" name="save" value="Save">
+<a href="/">Cancel</a>
