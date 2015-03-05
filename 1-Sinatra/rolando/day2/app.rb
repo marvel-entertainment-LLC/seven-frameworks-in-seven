@@ -5,6 +5,8 @@ require "dm-serializer"
 require "sinatra/respond_with"
 require "haml"
 
+set :port, 9000
+
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/bookmarks.db")
 DataMapper.finalize.auto_upgrade!
 

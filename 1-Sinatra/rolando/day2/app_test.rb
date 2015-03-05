@@ -11,21 +11,53 @@ describe "Bookmarking App" do
     Sinatra::Application
   end
 
-  # Get the JSON to compare the rendered html against but also implicitly tests "returns a list of bookmarks as json"
-  before(:each) do
+
+  it "returns a list of boomarks as json" do
+
     get "/bookmarks", nil, {'HTTP_ACCEPT' => "application/json"}
-    last_response.should be_ok
-    @bookmarks = JSON.parse(last_response.body)
-    @bookmarks.should be_instance_of(Array)
+    expect(last_response).to be_ok
+    bookmarks = JSON.parse(last_response.body)
+    expect(bookmarks).to be_instance_of(Array)
+
   end
 
   it "renders a list of boomarks as html" do
 
+    get "/bookmarks", nil, {'HTTP_ACCEPT' => "application/json"}
+    bookmarks = JSON.parse(last_response.body)
+
     get "/bookmarks", nil, {'HTTP_ACCEPT' => "text/html"}
-    last_response.should be_ok
     page = Nokogiri::HTML(last_response.body)
-    page.css('title')[0].text.should eq("Bookmarking App")
-    page.css('li').size.should eq(@bookmarks.size)
+    expect(last_response).to be_ok
+    expect(page.css('title')[0].text).to eq("Bookmarking App")
+    expect(page.css('li').size).to eq(bookmarks.size)
+
+  end
+
+  it "renders an edit page for each bookmark" do
+
+    get "/bookmarks", nil, {'HTTP_ACCEPT' => "application/json"}
+    bookmarks = JSON.parse(last_response.body)
+
+    bookmarks.each do |bookmark|
+      get "/bookmarks/#{bookmark['id']}", nil, {'HTTP_ACCEPT' => "text/html"}
+      page = Nokogiri::HTML(last_response.body)
+      expect(last_response).to be_ok
+      expect(page.at("form.edit")["action"]).to eq("/bookmarks/#{bookmark['id']}")
+      expect(page.at("input[name='title']")["value"]).to eq(bookmark["title"])
+      expect(page.at("input[name='url']")["value"]).to eq(bookmark["url"])
+    end
+
+  end
+
+  it "renders an add a new bookmark page" do
+
+    get "/bookmark/new", nil, {'HTTP_ACCEPT' => "text/html"}
+    page = Nokogiri::HTML(last_response.body)
+    expect(last_response).to be_ok
+    expect(page.at("form.new")["action"]).to eq("/bookmarks")
+    expect(page.at("input[name='title']")["value"]).to eq("")
+    expect(page.at("input[name='url']")["value"]).to eq("")
 
   end
 
