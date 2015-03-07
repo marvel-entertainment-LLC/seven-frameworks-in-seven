@@ -1,0 +1,23 @@
+def xml.form_delete(id)
+  form(:action=>"/bookmarks/#{id}", :method=>'post') {
+    input :type=>'hidden',:name=>'_method',:value=>'delete'
+    input :type=>'submit',:value=>'Delete'
+  }
+end
+
+xml.html {
+  xml.body {
+    xml.h2 "List of Bookmarks"
+    xml.a(:href => '/bookmark/new') {|x| x.text "Add New Bookmark"}
+    xml.ul {
+      @bookmarks.each { |b|
+        xml.li {
+          xml.a(:href => "/bookmarks/#{b.id}") { xml.text b.title }
+          xml.form_delete b.id
+          xml.text '|'
+          xml.a(:href=>"#{b.url}") {|x| x.text "site-link: #{b.title}" }
+        }
+      }
+    }
+  }
+}

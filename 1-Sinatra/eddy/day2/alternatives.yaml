@@ -1,0 +1,16 @@
+
+Template Engine Alternatives:
+  - Tilt # template engine abstraction layer
+  # see https://github.com/rtomayko/tilt/
+  - HAML # templating haiku
+  # see http://haml.info/
+  # http://code.tutsplus.com/tutorials/an-introduction-to-haml-and-sinatra--net-14858
+  - Temple # intermediary templating language
+  # see https://github.com/judofyr/temple
+  - WLang # https://github.com/blambeau/wlang
+  - erubis # feature rich multiplatform templating
+
+  - Liquid? # http://liquidmarkup.org/
+  - Nokogiri?
+  - Builder?
+  - Yajl

@@ -1,0 +1,7 @@
+xml.html {
+  xml.body {
+    xml.form(:action=>"/bookmarks/new",:method=>"post") {
+      xml << @sinatra.nokogiri(:bookmark_inputs)
+    }
+  }
+}

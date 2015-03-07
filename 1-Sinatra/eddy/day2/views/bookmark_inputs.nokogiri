@@ -1,0 +1,16 @@
+xml.div {
+  xml.label {
+    xml.text 'URL:'
+    xml.input :type=>'text',
+              :name=>'url',
+              :value => "#{@bookmark && @bookmark.url}"
+  }
+  xml.label {
+    xml.text 'Title:'
+    xml.input :type => 'text',
+              :name => 'title',
+              :value => "#{@bookmark && @bookmark.title}"
+  }
+  xml.input :type => 'submit', :name => 'save', :value => ' Save '
+  xml.a(:href => '/') { |x| x.text 'Cancel' }
+}
