@@ -1,0 +1,12 @@
+<ul class="list-group">
+  {{#bookmarks}}
+    <li class="list-group-item" {{data "bookmark"}}>
+      <button class="btn edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+      <button class="btn delete"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+      <button class="btn copy">Copy</button>
+       <a href="{{url}}">{{title}}</a>
+     ( <a href="{{url}}">{{url}}</a> )
+
+    </li>
+  {{/bookmarks}}
+</ul>

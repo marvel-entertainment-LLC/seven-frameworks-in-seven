@@ -4,6 +4,7 @@
   "homepage": "https://github.com/marvel-entertainment-LLC/seven-frameworks-in-seven",
   "dependencies": {
     "jquery": "~2.1.3",
-    "canjs": "~2.2.0"
+    "canjs": "~2.2.0",
+    "bootstrap": "~3.3.4"
   }
 }
