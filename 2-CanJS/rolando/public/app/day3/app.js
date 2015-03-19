@@ -8,7 +8,8 @@
 ***/
 
 var Day3BookmarkFormControl = TaggedBookmarkFormControl.extend({
-  'input keyup': function (el) {
+  // 'input keyup': function (el) {
+  'input change': function (el) {
     var bookmark = $('button.save').data('bookmark');
     bookmark.attr(can.deparam(el.serialize()));
   }
@@ -26,17 +27,25 @@ var App_day3 = can.Construct.extend({
       return noFilter || tagListContainsFilterTag;
     };
 
-    TaggedBookmark.findAll({}, function(bookmarks) {
-
-      bookmarks.comparator = 'title';
-      console.log(bookmarks);
-      // bookmarks = bookmarks.sort();
+    TaggedBookmark.findAll({}, function (bookmarks) {
 
       var eventHub = new can.Observe({});
       var options = {eventHub:eventHub, bookmarks:bookmarks,
         filterObject:filterObject};
 
       var filtered = bookmarks.filter(filterFunction);
+      filtered.sort = function () {
+        var arr = [];
+        for (var i = 0, l = filtered.length; i < l; i++) {
+          arr.push(filtered[i]);
+        }
+        return arr.sort(function (a, b){
+          var aName = a.title.toLowerCase();
+          var bName = b.title.toLowerCase(); 
+          return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+          // return ((aName > bName) ? -1 : ((aName < bName) ? 1 : 0));
+        });
+      };
 
       var formView = "/app/tagfilter/bookmark_form";
       var formOptions = can.extend({}, options, {view:formView});
