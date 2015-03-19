@@ -38,7 +38,7 @@ var TaggedBookmark = ValidatingBookmark.extend({
     console.log(tagList);
 
     // Update the tag list to match the ones entered by the user
-    tagList.attr(notEmpty.sort(), true); /* without true, it won't remove elements from the array that aren't in the new list */
+    tagList.attr(notEmpty.sort(), true); /* without true, it won't remove elements from the array that aren't in the new list - roshow */
     console.log(tagList);
     var forceUpdate = (notEmpty.length == tagList.length);
     if (forceUpdate) {

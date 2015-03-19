@@ -6,6 +6,13 @@
  * We make no guarantees that this code is fit for any purpose. 
  * Visit http://www.pragmaticprogrammer.com/titles/7web for more book information.
 ***/
+
+var Day3BookmarkFormControl = TaggedBookmarkFormControl.extend({
+  'input keyup': function (el) {
+    var bookmark = $('button.save').data('bookmark');
+    bookmark.attr(can.deparam(el.serialize()));
+  }
+});
 var App_day3 = can.Construct.extend({
   init: function() {
     var filterObject = new can.Observe({
@@ -20,6 +27,11 @@ var App_day3 = can.Construct.extend({
     };
 
     TaggedBookmark.findAll({}, function(bookmarks) {
+
+      bookmarks.comparator = 'title';
+      console.log(bookmarks);
+      // bookmarks = bookmarks.sort();
+
       var eventHub = new can.Observe({});
       var options = {eventHub:eventHub, bookmarks:bookmarks,
         filterObject:filterObject};
@@ -30,10 +42,10 @@ var App_day3 = can.Construct.extend({
       var formOptions = can.extend({}, options, {view:formView});
 
       var filteredOptions = can.extend({}, options, {bookmarks:filtered,
-        view: "/app/routing/bookmark_list"});
+        view: "/app/day3/bookmark_list"});
 
       new BookmarkListControl("#bookmark_list_container", filteredOptions);
-      new TaggedBookmarkFormControl("#bookmark_form_container", formOptions);
+      new Day3BookmarkFormControl("#bookmark_form_container", formOptions);
       new TagListControl("#tag_list_container",
         can.extend(options, {view:"/app/day3/tag_list.ejs"}));
       new TagFilterControl("#filter_container",
