@@ -72,10 +72,15 @@ var BookmarkFormControl = can.Control.extend({
     this.saveBookmark(bookmark);
   },
   saveBookmark: function(bookmark) {
-    bookmark.save(this.clearForm.bind(this), this.signalError); // (6)
+    bookmark.save(this.clearForm.bind(this), this.signalError.bind(this)); // (6)
   },
-  signalError: function() {
-    alert("The input is not valid.");
+  signalError: function(e) {
+    if (e.status === 200) {
+      this.clearForm();
+    }
+    else {
+      alert("The input is not valid.");
+    }
   },
   ".clear click": function(el, evt) {
     evt.preventDefault();
