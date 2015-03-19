@@ -83,17 +83,6 @@ var Day2FormControl = BookmarkFormControl.extend({
     bookmark.attr(can.deparam(el.closest("form").serialize())); // (5)
     this.saveBookmark(bookmark);
   },
-  saveBookmark: function(bookmark) {
-    bookmark.save(this.clearForm.bind(this), this.signalError.bind(this)); // (6)
-  },
-  signalError: function(e) {
-    if (e.status === 200) {
-      this.clearForm();
-    }
-    else {
-      alert("The input is not valid.");
-    }
-  },
   ".clear click": function(el, evt) {
     evt.preventDefault();
     this.clearForm();
