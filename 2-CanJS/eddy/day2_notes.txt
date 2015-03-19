@@ -1,0 +1,25 @@
+
+CANJS, day 2 notes:
+
+- controls used to assign selectors + events + callbacks to an element
+- controls listeners are scoped to the bound element
+- there exists a mustache helper "data" to load a model in the view?
+    - to get model data from the control, use the data function from the element
+
+- use an "observer" to communicate between controllers (decoupled manner)
+- "eventHub" is a really cool concept for observeable event dispatching
+
+- learned about "public" sinatra folder
+
+- rather heavy framework; almost feels like working with mobile app development. Easy to fall behind if you aren't use to the conventions.
+- canned/novel way of dealing with events with "selector event": handler_callback
+- event/handlers can be bound directly to models
+    - eg. attributes, created/updated/destroyed
+
+- does this framework offer any features that are not already available elsewhere?
+
+
+day2 self-study:
+- you might be fooled to believe that Model.bind and
+- bind(this) is needed due to carry the context of BookmarkFormControl to the bookmark.destroy event that is deferred invoked.
+- if you dont bind to the BookmarkFormControl object, the event handler will attempt to invoke "editBookmark" on the bookmark instead of the form control
