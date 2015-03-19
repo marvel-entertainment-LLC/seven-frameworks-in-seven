@@ -13,7 +13,7 @@ var Bookmark = can.Model.extend({
   destroy: "DELETE /bookmarks/{id}",
 }, {
 });
-var BookmarkListControl = can.Control.extend({
+var Day2ListControl = BookmarkListControl.extend({
   view: "/app/day2/bookmark_list",
 
   init: function(element, options) {
@@ -52,7 +52,7 @@ var BookmarkListControl = can.Control.extend({
   }
 
 });
-var BookmarkFormControl = can.Control.extend({
+var Day2FormControl = BookmarkFormControl.extend({
   // Add properties here.
   BookmarkModel: Bookmark,
   view: "/app/day2/bookmark_form",
@@ -84,10 +84,13 @@ var BookmarkFormControl = can.Control.extend({
     this.saveBookmark(bookmark);
   },
   saveBookmark: function(bookmark) {
-    bookmark.save(this.clearForm.bind(this), this.signalError); // (6)
+    bookmark.save(this.clearForm.bind(this), this.signalError.bind(this)); // (6)
   },
   signalError: function(e) {
-    if (e.status !== 200) {
+    if (e.status === 200) {
+      this.clearForm();
+    }
+    else {
       alert("The input is not valid.");
     }
   },
@@ -107,11 +110,11 @@ var App_day2 = can.Construct.extend({
 
       // Create the control, attaching it to the element on the page
       // that has id="bookmark_list_container"
-      new BookmarkListControl("#bookmark_list_container", options);
+      new Day2ListControl("#bookmark_list_container", options);
 	  
       // Create the bookmark form control (which we build in the
       // next section.)
-      new BookmarkFormControl("#bookmark_form_container", options);
+      new Day2FormControl("#bookmark_form_container", options);
     });
   }
 });
