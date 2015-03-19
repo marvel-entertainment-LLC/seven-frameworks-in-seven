@@ -33,10 +33,13 @@ var TaggedBookmark = ValidatingBookmark.extend({
       return tag.length > 0;
     };
     var notEmpty = can.filter(trimmed, byNotEmpty);
+    console.log(notEmpty);
     var tagList = this.attr("tagList");
+    console.log(tagList);
 
     // Update the tag list to match the ones entered by the user
-    tagList.attr(notEmpty.sort(), true);
+    tagList.attr(notEmpty.sort(), true); /* without true, it won't remove elements from the array that aren't in the new list */
+    console.log(tagList);
     var forceUpdate = (notEmpty.length == tagList.length);
     if (forceUpdate) {
       can.trigger(this.attr("tagList"), "length");

@@ -1,0 +1,8 @@
+Tags:
+<ul>
+  <% for (var tags = bookmarks.tags(), i = 0,  l = tags.length; i < l; i++) { %>
+    <li>
+      <a href="#!filter/<%= tags[i].label %>"><%= tags[i].label %> (<%= tags[i].bookmarkCount %>)</a>
+    </li>
+  <% } %>
+</ul>
