@@ -94,6 +94,7 @@ get "/example/:example" do
     {:example => "tagfilter", :label => "Tag Filter"},
     {:example => "routing", :label => "Routing"},
     {:example => "day2", :label => "Day 2"},
+    {:example => "day3", :label => "Day 3"},
   ]
   @example = params[:example]
 
