@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>CanJS Day1</title>
+  </head>
+  <body>
+    <div id="target"></div>
+  </body>
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/canjs.com-1.1.8/can.jquery.js"></script>
+  <script>
+
+    var bookmarks = new can.Observe.List([
+        { url: "http://one.com", title: "One" },
+        { url: "http://two.com", title: "Two" }
+    ]);
+
+    var viewModel = { bookmarks: bookmarks };
+    $("#target").html(can.view('app/base/bookmark_list.mustache'), viewModel);
+
+  </script>
+  <p/>
+  <button value = "CLick me!" onclick='bookmarks.push(
+    { url: "http://three.com", title: "Three" }
+  );'> Click me to Push -> three </button>
+</html>
