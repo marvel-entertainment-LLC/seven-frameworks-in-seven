@@ -1,0 +1,12 @@
+(require 'zap.models)
+(in-ns 'zap.models)
+(insert project (values {:name "Zap"}))
+(insert project (values {:name "Website"}))
+(select project)
+(select project (where {:id 1}))
+(select project (where (or (> :id 1) (= :name "Zap"))))
+(select project (where (> :id 1)))
+(select project (where (>= :id 1)))
+(select project (where (> :id 1)))
+(select project (where (> :id 0)))
+exit
