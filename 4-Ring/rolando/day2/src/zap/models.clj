@@ -1,8 +1,9 @@
 ;
 (ns zap.models
-  (:refer-clojure :exclude [comment]) ;;(1)
+  (:refer-clojure :exclude [comment])
   (:use korma.db korma.core)
-  (:require [clojure.string :as string]))
+  (:require [clojure.data.json :as json]
+            [clojure.string :as string]))
 
 (defdb zap ;;(2)
   (sqlite3 {:db "zap.db"}))
@@ -26,9 +27,14 @@
   (belongs-to issue)) ;;(5)
 ;
 
-;
-(defn all-projects []
-  (select project))
+; New stuff - roshow
+; using multiple argument option and passing options for API calls 
+(defn all-projects 
+  ([] (select project))
+  ([opts]
+    (select project
+      (offset (:offset opts))
+      (limit (:limit opts)))))
 
 (defn create-project [proj]
   (insert project (values proj)))
@@ -52,7 +58,7 @@
       (join status (= :issue.status :status.id)))) ;;(10)
 
 (defn issues-by-project [id]
-  (-> (issue-query) ;;(11)
+  (-> (issue-query)
       (where {:issue.project_id id})
       exec)) ;;(12)
 
@@ -67,6 +73,10 @@
   (select comment
           (where {:issue_id id})
           (order :id)))
+
+(defn comment-by-id [id]
+  (first (select comment
+          (where {:id id}))))
 
 (defn status-by-name [s]
   (first (select status (where {:name s}))))

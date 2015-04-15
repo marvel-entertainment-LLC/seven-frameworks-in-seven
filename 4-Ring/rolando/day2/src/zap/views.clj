@@ -213,3 +213,13 @@
           {:status 200 :body ""})
         {:status 404 :body ""}))))
 ;
+
+(defn create-comment [iid params]
+  (let [errors (valids/valid-comment? params)]
+    (if errors
+      {:status 400
+       :body (json/write-str {:errors errors})}
+      (do
+        (models/create-comment (merge params {:issue_id iid}))
+        {:status 200 :body ""}))))
+;

@@ -1,0 +1,7 @@
+(def params {:limit 3 :offset 1})
+params
+(assoc params :d 4)
+(assoc params :c 4)
+(assoc params :limit 4)
+(assoc params :limit 4 :offset 2)
+(assoc params :limit 4 :offset 4)

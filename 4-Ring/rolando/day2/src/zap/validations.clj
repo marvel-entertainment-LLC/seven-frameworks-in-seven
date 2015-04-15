@@ -14,3 +14,8 @@
     [:description present? "description must be specified"]
     [:description (min-length 1) "description must not be blank"]
     [:status (between 1 4) "status id must be between 1 and 4"]))
+
+(defn valid-comment? [comm]
+  (validate comm
+    [:content present? "content must be specified"]
+    [:content (min-length 1) "content must not be blank"]))
