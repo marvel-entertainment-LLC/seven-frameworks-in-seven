@@ -10,7 +10,8 @@
                  [korma "0.3.0-RC2"]
                  [org.xerial/sqlite-jdbc "3.7.2"]
 
-                 [hiccup "1.0.2"]]
+                 [hiccup "1.0.2"]
+                 [valip "0.2.0"]]
 
   :profiles {:dev {:dependencies [[ring-serve "0.1.2"]]}}
 

@@ -68,7 +68,7 @@
   (context "/api" [] api-routes))
 
 (def app
-  (-> app-routes
+  (-> all-routes
       (wrap-resource "public")
       wrap-keyword-params
       wrap-params))

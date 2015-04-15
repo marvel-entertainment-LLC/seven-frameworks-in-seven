@@ -1,6 +1,6 @@
 (ns zap.validations
   (require [valip.core :refer [validate]]
-           [valip.validations :refer [present?]]))
+           [valip.predicates :refer [present? min-length between]]))
                
 (defn valid-project? [proj]
   (validate proj

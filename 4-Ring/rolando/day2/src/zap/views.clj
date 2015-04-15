@@ -4,7 +4,7 @@
             [hiccup.form :refer [form-to text-field submit-button text-area]]
             [ring.util.response :as response]
             [zap.models :as models]
-            [zap.validations :as valid]))
+            [zap.validations :as valids]))
 
 (defn index []
   (response/redirect "/projects"))
