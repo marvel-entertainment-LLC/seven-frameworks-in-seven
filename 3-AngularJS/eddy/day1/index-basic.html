@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang='en' ng-app="basicApp">
+<head>
+    <meta charset="utf-8">
+    <title>AngularJS basic</title>
+</head>
+<body ng-controller="basicController">
+    <div>
+        What's your name?
+        <input type="text" ng-model="greeter.name">
+    </div>
+    <div>
+        {{greeter.greeting()}}
+    </div>
+</body>
+<script src=""></script>
+<script src="greeter.js"></script>
+</html>

@@ -1,0 +1,19 @@
+AngularJS notes:
+- Day 1
+    - bootstrap order: module > service(s)
+    - automatically handles the low leve ajax requests for data exchange
+    this implies that your REST service needs to implement
+    AngularJS spec for a restful service
+    - resource service understands object attribute placeholders, e.g. @id
+    - not really understanding the test methodology when working with http requests
+
+    How to create/define a service:
+    - app.service
+    - app.factory
+    - app.provider(name, Object|function() )
+
+    Exercise:
+    - rant: have to figure out how to accomplish the self study exercise given
+      the available sample code, note it's all already implemented somewhere already
+      and touches on uncovered topics, like controllers/filters, yay fun!
+    

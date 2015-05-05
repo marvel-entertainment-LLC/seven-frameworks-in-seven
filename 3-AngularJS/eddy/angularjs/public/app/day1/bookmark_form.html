@@ -1,0 +1,10 @@
+<form name="bkForm">
+
+  <label>
+    Tags: (separated by commas)
+    <input type="text" ng-model="tags.list" name="tags">
+  </label>
+  <input type="button" class="btn btn-primary" ng-click="bookmarksByTags()" value="Find">
+  <input type="button" class="btn" ng-click="clearForm()" value="Clear">
+  <input type="button" class="btn" ng-click="showScope()" value="Expose scope">
+</form>
